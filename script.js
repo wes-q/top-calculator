@@ -1,22 +1,30 @@
 document.addEventListener("DOMContentLoaded", function() {
 
     const calcScreen = document.querySelector('.calc-screen');
-    const elements = document.querySelectorAll('.number');
+    const numberElements = document.querySelectorAll('.number');
     // document.querySelector('#btn-reset').addEventListener('click', () => { refreshPage() });
 
-    elements.forEach(function(element) {
-        element.addEventListener('click', handleClick);
+    numberElements.forEach(function(numberButton) {
+        numberButton.addEventListener('click', handleClick);
     });
 
     calcScreen.addEventListener('input', addCommasToScreen);
+    document.getElementById("clear").addEventListener('click', clearScreen);
+    // document.getElementById("clear").addEventListener('click', () => clearScreen());
 
     function handleClick (event) {
-
         const number = event.target.textContent;
-        console.log(number);
-        calcScreen.value += number;
+        const screenValue = calcScreen.value;
 
-        // Trigger the 'input' event manually
+        // Do not allow leading zeros
+        if (screenValue === "0") {
+            calcScreen.value = "";
+            calcScreen.value += number;
+        } else {
+            calcScreen.value += number;
+        }
+    
+        // Trigger the 'input' event manually to trigger function addCommasToScreen
         const eventx = new Event('input');
         calcScreen.dispatchEvent(eventx);
     }
@@ -29,18 +37,8 @@ document.addEventListener("DOMContentLoaded", function() {
         event.target.value = value;
     }
     
-    
+    function clearScreen (event) {
+        calcScreen.value = "0";
+    }
+
 });
-
-
-    
-//     let value = event.target.value;
-    
-//     // Remove any existing commas
-//     value = value.replace(/,/g, '');
-    
-//     // Add commas every three digits from the right
-//     value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    
-//     event.target.value = value;
-//   });
