@@ -1,3 +1,14 @@
+function operate (operator, num1, num2) {
+  switch (operator){ 
+    case '+': 
+      return add(num1 + num2);
+    case '-':
+      return subtract(num2 - num1);
+    case '*':
+      // return multiply(num1 * num2)
+  }
+};
+
 const add = function (a, b) {
   return a + b;
 };

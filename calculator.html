@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LAYOUT</title>
+    <link rel="stylesheet" href="./style.css">
+    <script src="script.js"></script>
+    <!-- <link rel="stylesheet" href="./normalize.css"> -->
+  </head>
+  <body>
+    <div class="main">
+
+        <div class="navbar">
+            <div class="navbar-l">
+                <span>Calculator</span>
+            </div>
+            <div class="navbar-r">                
+                <p>header link one</p>
+                <p>header link two</p>
+                <p>header link three</p>
+            </div>
+        </div>
+
+        <div class="middle">
+            <div class="calculator">
+                <div class="display">
+                  <input class="calc-screen" type="text" readonly value="1,000,000">
+                </div>
+                <div class="row">
+                    <button id="clear" class="dark-row">AC</button>
+                    <button id="btn-decimal" class="dark-row">.</button>
+                    <button id="delete" class="dark-row">⌫</button>
+                </div>
+                <div class="row">
+                  <button id="btn-7">7</button>
+                  <button id="btn-8">8</button>
+                  <button id="btn-9">9</button>
+                  <button id="btn-divide" class="operator">÷</button>
+                </div>
+                <div class="row">
+                  <button id="btn-4">4</button>
+                  <button id="btn-5">5</button>
+                  <button id="btn-6">6</button>
+                  <button id="btn-multiply" class="operator">*</button>
+                </div>
+                <div class="row">
+                  <button id="btn-1">1</button>
+                  <button id="btn-2">2</button>
+                  <button id="btn-3">3</button>
+                  <button id="btn-minus" class="operator">-</button>
+                </div>
+                <div class="row">
+                  <button id="btn-0">0</button>
+                  
+                  <button id="btn-equal">=</button>
+                  <button id="btn-plus" class="operator">+</button>
+                </div>
+              </div>
+              
+              
+        </div>
+
+        <div class="footer">
+            <span>Copyright © The Odin Project 2021</span>
+        </div>
+          
+    </div>    
+  </body>
+</html>
