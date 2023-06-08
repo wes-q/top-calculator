@@ -45,6 +45,10 @@ function concatDecimalToDisplay () {
     // Dont allow another decimal point in the display    
     if (screenValue.includes(".")) {
         // trigger sound effect
+        const audio = document.getElementById("tink-sound")
+        if (!audio) return;
+        audio.currentTime = 0;
+        audio.play();
     } else {
         calcScreen.value += ".";
     }
