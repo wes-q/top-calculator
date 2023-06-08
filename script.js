@@ -34,7 +34,7 @@ function concatNumberToDisplay (event) {
     } else {
         calcScreen.value += number;
     }
-    triggerInputEvent();
+    triggerInputEvent(); // Trigger input events to add proper commas
 }
 
 
@@ -52,18 +52,38 @@ function concatDecimalToDisplay () {
     } else {
         calcScreen.value += ".";
     }
-    triggerInputEvent();
 }
 
 
-function addCommasToScreen (event) {
+// function addCommasToScreen (event) {
+//     let value = event.target.value;
+//     value = value.replace(/,/g, '');
+//     value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+//     event.target.value = value;
+// }
+
+
+function addCommasToScreen(event) {
     let value = event.target.value;
-    value = value.replace(/,/g, '');
-    value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    
+    // Split value into integer and decimal parts
+    const parts = value.split('.');
+    let integerPart = parts[0];
+    const decimalPart = parts[1] ? `.${parts[1]}` : '';
+    
+    // Remove existing commas from the integer part
+    integerPart = integerPart.replace(/,/g, '');
+    
+    // Add commas every three digits in the integer part
+    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    
+    // Reconstruct the value with comma-formatted integer part and decimal part
+    value = integerPart + decimalPart;
+    
     event.target.value = value;
-}
+  }
 
-
+  
 function clearScreen (event) {
     document.querySelector('.calc-screen').value = "0";
 }
