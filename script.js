@@ -4,6 +4,7 @@ let y = 0.0;
 let z = 0.0;
 let justPressedOperator = false
 let operator = "";
+let truncatedNumber = 0;
 
 document.addEventListener("DOMContentLoaded", function() {
     document.querySelectorAll('.number').forEach(numberButton => numberButton.addEventListener('click', concatNumberToDisplay));
@@ -18,22 +19,26 @@ document.addEventListener("DOMContentLoaded", function() {
 });    
 
 const add = function (x, y) {
-    return x + y;
+    return truncate8decimal(x + y);
   };
   
 const subtract = function (x, y) {
-return y - x;
+    return truncate8decimal(x - y);
 };
 
 const multiply = function (x, y) {
-    return x * y;
+    return truncate8decimal(x * y);
 };
 
 const divide = function (x, y) {
     if (y === 0) {
         return "lmao"
     }
-    return x / y;
+    return truncate8decimal(x / y);
+};
+
+function truncate8decimal(number) {
+    return parseFloat(number.toFixed(8)).toString();
 };
 
 function operate(event) {
@@ -47,18 +52,25 @@ function solve() {
     switch (operator) {
         case "+":
             z = add(x, y);
-            alert(`x=${x} y=${y} z=${z}`);
-            document.querySelector('.calc-screen').value = z
+            // alert(`x=${x} y=${y} z=${z}`);
+            document.querySelector('.calc-screen').value = z;
             triggerInputEvent(); // Trigger input events to add proper commas
             break;
         case "-":
             z = subtract(x, y);
-            alert(`x=${x} y=${y} z=${z}`);
+            document.querySelector('.calc-screen').value = z;
+            triggerInputEvent(); // Trigger input events to add proper commas
+            break;
+        case "*":
+            z = multiply(x, y);
             document.querySelector('.calc-screen').value = z
             triggerInputEvent(); // Trigger input events to add proper commas
             break;
-        // case "*":
-        // case "÷":
+        case "÷":
+            z = divide(x, y);
+            document.querySelector('.calc-screen').value = z
+            triggerInputEvent(); // Trigger input events to add proper commas
+            break;
     }
 }
 
@@ -88,6 +100,7 @@ function solve() {
 // y = 3 > 5 > 10 > 100
 // 2+3= = 10 = 100 =
 //    5 8    13   103 
+
 
 function backspace () {
     const calcScreen = document.querySelector('.calc-screen');
