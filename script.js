@@ -1,7 +1,7 @@
 let numberSaved = false;
-let x = 0.0;
-let y = 0.0;
-let z = 0.0;
+let x = null;
+let y = null;
+let z = null;
 let justPressedOperator = false
 let operator = "";
 let truncatedNumber = 0;
@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // document.querySelectorAll(".operator").forEach(operatorButton => operatorButton.addEventListener('click', operate)); // event works 
     // document.querySelectorAll(".operator").forEach(operatorButton => operatorButton.addEventListener('click', () => operate())); // no event from arrow function
     document.querySelectorAll(".operator").forEach(operatorButton => operatorButton.addEventListener('click', event => operate(event))); // event works
-    document.getElementById("btn-equal").addEventListener('click', () => solve());
+    document.getElementById("btn-equal").addEventListener('click', () => equal());
 });    
 
 const add = function (x, y) {
@@ -37,39 +37,65 @@ const divide = function (x, y) {
     return truncate8decimal(x / y);
 };
 
+
 function truncate8decimal(number) {
     return parseFloat(number.toFixed(8)).toString();
 };
 
+
 function operate(event) {
-    x = Number(document.querySelector('.calc-screen').value.replace(/,/g, ""));
-    operator = event.target.textContent; // Get and set the operator pressed
-    justPressedOperator = true;
+    justPressedOperator = true; // this value will be used to check if pressing number key will replace number displayed
+
+    if (x === null) {
+        x = Number(document.querySelector('.calc-screen').value.replace(/,/g, "")); // Remove commas from string then convert to number
+        operator = event.target.textContent; // Get and set the operator pressed
+    } else if (y === null) {
+        y = Number(document.querySelector('.calc-screen').value.replace(/,/g, "")); // Store the current displayed value 
+        solve(); // Set the answer to the first operand
+        x = Number(document.querySelector('.calc-screen').value.replace(/,/g, ""));
+        operator = event.target.textContent; // Get and set the operator pressed
+        y = null; // Clear the second operand for the next number
+    }
+}
+
+function equal(event) {
+    // justPressedOperator = true; // this value will be used to check if pressing number key will replace number displayed
+
+    if (x === null) {
+        // x = Number(document.querySelector('.calc-screen').value.replace(/,/g, "")); // Remove commas from string then convert to number
+        // operator = event.target.textContent; // Get and set the operator pressed
+    } else if (y === null) {
+        y = Number(document.querySelector('.calc-screen').value.replace(/,/g, "")); // Store the current displayed value 
+        solve(); // Set the answer to the first operand
+        x = null;
+        operator = null 
+        y = null;
+    }
 }
 
 function solve() {
-    y = Number(document.querySelector('.calc-screen').value.replace(/,/g, "")); // Store the current displayed value 
+
     switch (operator) {
         case "+":
+            // alert(`x=${x} y=${y} ${operator} z=${z}`);
             z = add(x, y);
-            // alert(`x=${x} y=${y} z=${z}`);
             document.querySelector('.calc-screen').value = z;
-            triggerInputEvent(); // Trigger input events to add proper commas
+            triggerInputEvent(); 
             break;
         case "-":
             z = subtract(x, y);
             document.querySelector('.calc-screen').value = z;
-            triggerInputEvent(); // Trigger input events to add proper commas
+            triggerInputEvent(); 
             break;
         case "*":
             z = multiply(x, y);
             document.querySelector('.calc-screen').value = z
-            triggerInputEvent(); // Trigger input events to add proper commas
+            triggerInputEvent(); 
             break;
         case "÷":
             z = divide(x, y);
             document.querySelector('.calc-screen').value = z
-            triggerInputEvent(); // Trigger input events to add proper commas
+            triggerInputEvent(); 
             break;
     }
 }
@@ -173,9 +199,20 @@ function addCommasToScreen(event) {
     event.target.value = value;
   }
 
-  
-function clearScreen (event) {
+
+function clearScreen () {
     document.querySelector('.calc-screen').value = "0";
+    clearValues();    
+}
+
+
+function clearValues () {
+    // Reset variables
+    x = null;
+    y = null;
+    // justPressedOperator = false
+    // operator = null; //retain the operator
+    truncatedNumber = 0;
 }
 
 
